@@ -1,0 +1,30 @@
+tables:
+
+    users:
+        - _id
+        - avatar
+        - email
+        - fullname
+        - password
+        - confirmed
+        - confirm_hash
+        - last_seen
+        - created_at
+        - updated_at
+
+    dialogs:
+        - _id
+        - author [user._id]
+        - partner [user._id]
+        - created_at
+        - updated_at
+
+    messages:
+        - _id
+        - author [user._id]
+        - partner [user._id]
+        - text
+        - dialog [dialog._id]
+        - unread
+        - created_at
+        - updated_at
