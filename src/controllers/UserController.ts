@@ -1,8 +1,8 @@
 import express from 'express';
 import { UserModel } from "../schemas";
 
-class UserController {
-    index(req: express.Request, res: express.Response) {
+export default class UserController {
+    show(req: express.Request, res: express.Response) {
         const id: string = req.params.id;
         UserModel.findById(id, (err: any, user: any) => {
             if (err) {
@@ -37,7 +37,7 @@ class UserController {
 
     delete(req: express.Request, res: express.Response) {
         const id: string = req.params.id;
-        UserModel.findByIdAndRemove(id, (err: any, user: any) => {
+        UserModel.findByIdAndDelete(id, (err: any, user: any) => {
             if (err) {
                 return (
                     res.status(404).json({
@@ -53,4 +53,4 @@ class UserController {
     }
 }
 
-export default UserController;
+// export default UserController;

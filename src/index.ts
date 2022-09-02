@@ -17,8 +17,9 @@ app.use(bodyParser.json());
 
 mongoose.connect(DB_URL);
 
-app.get('/user/:id', User.index);
-app.get('/user/registration', User.create);
+app.get('/user/:id', User.show);
+app.post('/user/registration', User.create);
+app.delete('/user/:id', User.delete);
 
 app.listen(PORT, () => {
    console.log('PORT: ' + PORT);
