@@ -12,24 +12,10 @@ export interface IUser extends Document {
 }
 
 const UserSchema = new Schema({
-    email: {
-        type: String,
-        require: 'Укажите адрес электронной почты',
-        index: { unique: true },
-        // validate: [isEmail, 'Invalid email']
-    },
-    fullname: {
-        type: String,
-        require: true
-    },
-    password: {
-        type: String,
-        require: true
-    },
-    confirmed: {
-        type: Boolean,
-        default: false
-    },
+    email: { type: String, require: 'Укажите адрес электронной почты', index: { unique: true } },
+    fullname: { type: String, require: true },
+    password: { type: String, require: true },
+    confirmed: { type: Boolean, default: false },
     avatar: String,
     confirm_hash: String,
     last_seen: Date,
