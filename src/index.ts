@@ -22,6 +22,7 @@ app.delete('/user/:id', User.delete);
 
 app.get('/dialogs/:id', Dialog.index);
 app.post('/dialogs', Dialog.create);
+app.delete('/dialogs/:id', Dialog.delete);
 
 // Listen
 app.listen(PORT, () => {

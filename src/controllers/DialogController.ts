@@ -2,6 +2,7 @@ import express from 'express';
 import { DialogModel, UserModel } from "../models";
 
 export default class DialogController {
+
     index(req: express.Request, res: express.Response) {
         const authorId: string = req.params.id;
         DialogModel.find({author: authorId}).populate(['author', 'partner']).exec(function (err, dialogs) {
@@ -23,6 +24,7 @@ export default class DialogController {
         //     }
         // })
     }
+
     create(req: express.Request, res: express.Response) {
         const postData = {
             author: req.body.author,
@@ -33,6 +35,23 @@ export default class DialogController {
             res.json(obj);
         }).catch(reason => {
             res.json(reason);
+        })
+    }
+
+    delete(req: express.Request, res: express.Response) {
+        const id: string = req.params.id;
+        DialogModel.findByIdAndDelete(id, (err: any, user: any) => {
+            if (err) {
+                return (
+                    res.status(404).json({
+                        message: 'Диалог не найден'
+                    })
+                )
+            } else {
+                res.json({
+                    message: 'Диалог был успешно удален'
+                });
+            }
         })
     }
 }

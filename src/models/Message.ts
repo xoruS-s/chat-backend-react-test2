@@ -1,23 +1,33 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose, { Schema, Document } from 'mongoose';
+
+export interface IMessage extends Document {
+    text: string;
+    read: boolean;
+    dialog: {
+      type: Schema.Types.ObjectId;
+      ref: string;
+      require: true;
+    };
+}
 
 const MessageSchema = new Schema({
-    author: {
-        type: String
-    },
-    partner: {
-        type: String
-    },
     text: {
-        type: String
+        type: String,
+        require: Boolean
     },
-    dialog: {
-        type: String
+    read: {
+        type: Boolean,
+        default: false
     },
-    unread: {
-        type: String
+    lastMessage: {
+        type: Schema.Types.ObjectId,
+        ref: 'Dialog'
     },
+
+}, {
+    timestamps: true
 });
 
-const MessageModel = mongoose.model('Message', MessageSchema);
+const MessageModel = mongoose.model<IMessage>('Message', MessageSchema);
 
 export default MessageModel;
