@@ -1,5 +1,5 @@
 import express from 'express';
-import { UserModel } from "../schemas";
+import { UserModel } from "../models";
 
 export default class UserController {
     show(req: express.Request, res: express.Response) {
@@ -8,7 +8,7 @@ export default class UserController {
             if (err) {
                 return (
                     res.status(404).json({
-                        message: 'Не найден'
+                        message: 'Пользователь не найден'
                     })
                 )
             } else {
@@ -46,7 +46,7 @@ export default class UserController {
                 )
             } else {
                 res.json({
-                    message: 'User is deleted'
+                    message: 'Пользователь удален'
                 });
             }
         })
