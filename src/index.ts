@@ -1,18 +1,24 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import bodyParser from "body-parser";
+import dotenv from 'dotenv';
 
 import { UserController, DialogController, MessageController } from "./controllers";
+import { updateLastSeen } from './middlewares';
 
 const app = express();
-const PORT = 50505;
+// const PORT = 50505;
 const DB_URL = 'mongodb://127.0.0.1:27017/chat';
 
+dotenv.config();
+
+// Контроллеры
 const User = new UserController();
 const Dialog = new DialogController();
 const Message = new MessageController();
 
 app.use(bodyParser.json());
+app.use(updateLastSeen);
 
 mongoose.connect(DB_URL).then(r => {});
 
@@ -29,7 +35,9 @@ app.get('/messages', Message.index);
 app.post('/messages', Message.create);
 app.delete('/messages/:id', Message.delete);
 
+
+
 // Listen
-app.listen(PORT, () => {
-   console.log('PORT: ' + PORT);
+app.listen(process.env.PORT, () => {
+   console.log('Server start: http://localhost:' + process.env.PORT);
 });
