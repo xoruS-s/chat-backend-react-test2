@@ -1,5 +1,5 @@
 import express from 'express';
-import { DialogModel, UserModel } from "../models";
+import { DialogModel, MessageModel } from "../models";
 
 export default class DialogController {
 
@@ -11,6 +11,7 @@ export default class DialogController {
                     message: 'Диалоги не найдены'
                 });
             } else {
+                // console.log(authorId);
                 res.json(dialogs)
             }
         })
@@ -31,8 +32,20 @@ export default class DialogController {
             partner: req.body.partner
         };
         const dialog = new DialogModel(postData);
-        dialog.save().then((obj: any) => {
-            res.json(obj);
+        dialog.save().then((dialogObj: any) => {
+            // res.json(obj);
+
+            const message = new MessageModel({
+                text: req.body.text,
+                dialog: dialogObj._id,
+                user: req.body.author
+            });
+
+            message.save().then(() => {
+                res.json(dialogObj);
+            }).catch(reason => {
+                res.json(reason);
+            })
         }).catch(reason => {
             res.json(reason);
         })
