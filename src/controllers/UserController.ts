@@ -1,5 +1,6 @@
 import express from 'express';
 import { UserModel } from "../models";
+import { createJWT } from "../utils";
 
 export default class UserController {
     show(req: express.Request, res: express.Response) {
@@ -50,6 +51,20 @@ export default class UserController {
                 });
             }
         })
+    }
+
+    login(req: express.Request, res: express.Response) {
+        const postData = {
+            email: req.body.login,
+            password: req.body.password
+        };
+
+        const token = createJWT(postData);
+
+        res.json({
+            status: 'Успешно',
+            token
+        });
     }
 }
 

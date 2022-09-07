@@ -4,7 +4,7 @@ import bodyParser from "body-parser";
 import dotenv from 'dotenv';
 
 import { UserController, DialogController, MessageController } from "./controllers";
-import { updateLastSeen } from './middlewares';
+import { updateLastSeen, checkAuth } from './middlewares';
 
 const app = express();
 // const PORT = 50505;
@@ -19,6 +19,7 @@ const Message = new MessageController();
 
 app.use(bodyParser.json());
 app.use(updateLastSeen);
+app.use(checkAuth);
 
 mongoose.connect(DB_URL).then(r => {});
 
@@ -26,6 +27,7 @@ mongoose.connect(DB_URL).then(r => {});
 app.get('/user/:id', User.show);
 app.post('/user/registration', User.create);
 app.delete('/user/:id', User.delete);
+app.post('/user/login', User.login);
 
 app.get('/dialogs/:id', Dialog.index);
 app.post('/dialogs', Dialog.create);
