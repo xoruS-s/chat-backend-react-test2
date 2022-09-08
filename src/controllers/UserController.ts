@@ -1,6 +1,7 @@
 import express from 'express';
 import { UserModel } from "../models";
 import { createJWT } from "../utils";
+import { IUser } from "../models/User";
 
 export default class UserController {
     show(req: express.Request, res: express.Response) {
@@ -54,18 +55,30 @@ export default class UserController {
     }
 
     login(req: express.Request, res: express.Response) {
+        console.log("yes");
         const postData = {
             email: req.body.login,
             password: req.body.password
         };
 
-        const token = createJWT(postData);
-
-        res.json({
-            status: 'Успешно',
-            token
+        UserModel.findOne({ email: postData.email }, (err: any, user: IUser) => {
+            if (err) {
+                return res.status(404).json({
+                    message: 'Пользователь не найден'
+                })
+            }
+            if (user.password === postData.password) {
+                const token = createJWT(user);
+                res.json({
+                    status: 'Успешно',
+                    token
+                });
+            } else {
+                res.json({
+                    status: 'Успешно',
+                    message: 'Неверный логин или пароль'
+                });
+            }
         });
     }
 }
-
-// export default UserController;
