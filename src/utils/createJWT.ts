@@ -19,5 +19,6 @@ export default (user: ILoginData) => {
         algorithm: 'HS256'
     });
 
+    // console.log(token);
     return token;
 };

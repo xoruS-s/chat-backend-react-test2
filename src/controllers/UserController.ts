@@ -55,14 +55,14 @@ export default class UserController {
     }
 
     login(req: express.Request, res: express.Response) {
-        console.log("yes");
         const postData = {
-            email: req.body.login,
+            email: req.body.email,
             password: req.body.password
         };
 
         UserModel.findOne({ email: postData.email }, (err: any, user: IUser) => {
             if (err) {
+                // console.log("gg");
                 return res.status(404).json({
                     message: 'Пользователь не найден'
                 })
@@ -75,7 +75,7 @@ export default class UserController {
                 });
             } else {
                 res.json({
-                    status: 'Успешно',
+                    status: 202,
                     message: 'Неверный логин или пароль'
                 });
             }

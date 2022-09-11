@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 
 import { UserController, DialogController, MessageController } from "./controllers";
 import { updateLastSeen, checkAuth } from './middlewares';
+import { loginValid, registerValid } from './utils/validations';
 
 const app = express();
 const DB_URL = 'mongodb://127.0.0.1:27017/chat';

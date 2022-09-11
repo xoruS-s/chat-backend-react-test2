@@ -1,25 +1,21 @@
 import express from 'express';
 import { verifyJWT } from '../utils';
-import {IUser} from "../models/User";
 
-interface YUser {
-    email: string;
-    password: string;
-}
-
-export default (req: express.Request, res: express.Response, next: express.NextFunction) => {
-    const token:any = req.headers.token;
-
-    if (req.path !== '/user/login') {
-
+export default (req: any, res: any, next: any) => {
+    if (req.path === '/user/login' || req.path === '/user/registration') {
+        return next();
     }
 
-    verifyJWT(token).then(user => {
-        // req.user = user;
+    const token:any = req.headers.token;
+
+    verifyJWT(token).
+    then((user) => {
+        req.user = user;
         next();
-    }).catch(() => {
+    }).
+    catch(() => {
         res.status(403).json({
-            message: 'invalid'
+            message: 'invalid token'
         });
     });
 };

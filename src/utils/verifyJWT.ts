@@ -3,11 +3,13 @@ import { IUser } from "../models/User";
 
 export default (token: string) =>
     new Promise((resolve, reject) => {
-        jwt.verify(token, process.env.JWT_TOKEN || '', (err: any, decodedData: any) => {
+        // console.log("==============================================");
+        jwt.verify(token, process.env.JWT_SECRET || '', (err: any, decodedData: any) => {
             if (err || !decodedData) {
                 return reject(err);
             }
 
+            // console.log("----------------------");
             resolve(decodedData);
         });
     });
