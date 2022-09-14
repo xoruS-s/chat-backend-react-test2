@@ -9,8 +9,8 @@ export default (req: any, res: any, next: any) => {
     const token:any = req.headers.token;
 
     verifyJWT(token).
-    then((user) => {
-        req.user = user;
+    then((user?: any) => {
+        req.user = user.data._doc;
         next();
     }).
     catch(() => {

@@ -18,8 +18,9 @@ export default class MessageController {
     }
 
     create(req: express.Request, res: express.Response) {
-        const userId = '6314c7f9736410c54c9bf06d';
-
+        const tmpData: any = req.user;
+        // const userId = req.params.id;
+        const userId = tmpData._id;
         const postData = {
             text: req.body.text,
             dialog: req.body.dialog_id,

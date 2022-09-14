@@ -4,7 +4,10 @@ import { DialogModel, MessageModel } from "../models";
 export default class DialogController {
 
     index(req: express.Request, res: express.Response) {
-        const authorId: string = req.params.id;
+        const tmpData: any = req.user;
+        // const authorId: string = req.params.id;
+        const authorId = tmpData._id;
+
         DialogModel.find({author: authorId}).populate(['author', 'partner']).exec(function (err, dialogs) {
             if (err) {
                 return res.status(404).json({

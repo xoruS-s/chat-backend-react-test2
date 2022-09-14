@@ -32,7 +32,7 @@ app.post('/user/registration', User.create);
 app.delete('/user/:id', User.delete);
 app.post('/user/login', User.login);
 
-app.get('/dialogs/:id', Dialog.index);
+app.get('/dialogs', Dialog.index);
 app.post('/dialogs', Dialog.create);
 app.delete('/dialogs/:id', Dialog.delete);
 
