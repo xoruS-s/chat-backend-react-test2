@@ -19,8 +19,20 @@ export default class UserController {
         })
     }
 
-    getMe() {
-        // return my info
+    getMe(req: express.Request, res: express.Response) {
+        const tmpData: any = req.user;
+        const id = tmpData._id;
+        UserModel.findById(id, (err: any, user: any) => {
+            if (err) {
+                return (
+                    res.status(404).json({
+                        message: 'Пользователь не найден'
+                    })
+                )
+            } else {
+                res.json(user);
+            }
+        })
     }
 
     create(req: express.Request, res: express.Response) {
